@@ -10,20 +10,67 @@ import static org.junit.Assert.assertEquals;
  */
 public class YourSolverTest {
     @Test
-    public void test() {
+    public void testSameDirection() {
         assertB("☼☼☼☼☼☼" +
-                "☼ ╓  ☼" +
+                "☼    ☼" +
                 "☼ ▼  ☼" +
                 "☼    ☼" +
-                "☼☺ ☻ ☼" +
+                "☼ ☺  ☼" +
                 "☼☼☼☼☼☼", "DOWN");
 
         assertB("☼☼☼☼☼☼" +
-                "☼ ▲  ☼" +
-                "☼ ╙  ☼" +
                 "☼    ☼" +
-                "☼☺ ☻ ☼" +
+                "☼    ☼" +
+                "☼► ☺ ☼" +
+                "☼    ☼" +
+                "☼☼☼☼☼☼", "RIGHT");
+
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼ ▲  ☼" +
+                "☼☼☼☼☼☼", "UP");
+
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼☺  ◄☼" +
+                "☼    ☼" +
+                "☼    ☼" +
                 "☼☼☼☼☼☼", "LEFT");
+
+    }
+
+    @Test
+    public void testNotSameDirection() {
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼ ►  ☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼☼☼☼☼☼", "DOWN");
+
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼◄ ☺ ☼" +
+                "☼    ☼" +
+                "☼☼☼☼☼☼", "RIGHT");
+
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼ ►  ☼" +
+                "☼☼☼☼☼☼", "UP");
+
+        assertB("☼☼☼☼☼☼" +
+                "☼    ☼" +
+                "☼☺  ►☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼☼☼☼☼☼", "LEFT");
+
     }
 
     private void assertB(String boardString, String expected) {
