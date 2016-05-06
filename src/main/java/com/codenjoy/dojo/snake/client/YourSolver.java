@@ -14,7 +14,7 @@ import com.codenjoy.dojo.snake.model.Elements;
  */
 public class YourSolver implements Solver<Board> {
 
-    private static final String USER_NAME = "apofig@gmail.com";
+    private static final String USER_NAME = "blagodarno@gmail.com";
 
     private Dice dice;
     private Board board;
@@ -33,7 +33,7 @@ public class YourSolver implements Solver<Board> {
 
         char[][] field = board.getField();
 
-        // found snake
+        // found hrad of snake
         int snakeHeadX = -1;
         int snakeHeadY = -1;
         for (int x = 0; x < field.length; x++) {
@@ -55,7 +55,7 @@ public class YourSolver implements Solver<Board> {
             }
         }
 
-        // нашли змейку
+        // found apple
         int appleX = -1;
         int appleY = -1;
         for (int x = 0; x < field.length; x++) {
@@ -70,6 +70,24 @@ public class YourSolver implements Solver<Board> {
             }
             if (appleX != -1) {
                 break;
+            }
+        }
+
+        if (snakeHeadX == appleX && (((snakeHeadY > appleY) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
+                ((snakeHeadY < appleY)&& (field[snakeHeadX][snakeHeadY]=='▲')) )) {
+            if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
+                return Direction.RIGHT.toString();
+            } else {
+                return Direction.LEFT.toString();
+            }
+        }
+
+        if (snakeHeadY == appleY && (((snakeHeadX > appleX) && (field[snakeHeadX][snakeHeadY]=='►')) ||
+                (snakeHeadX < appleX)&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
+            if (field[snakeHeadX][snakeHeadY+1] == ' ') {
+                return Direction.DOWN.toString();
+            } else {
+                return Direction.UP.toString();
             }
         }
 
@@ -88,6 +106,8 @@ public class YourSolver implements Solver<Board> {
         if (dy > 0) {
             return Direction.UP.toString();
         }
+
+
 
         return Direction.UP.toString();
     }

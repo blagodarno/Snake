@@ -42,6 +42,121 @@ public class YourSolverTest {
     }
 
     @Test
+    public void testEatMeHorizontalMiddle() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼ ☺ ═══════►  ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
+    }
+
+    @Test
+    public void testEatMeHorizontalUpBreak() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼ ☺ ═══════►  ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
+    }
+
+    @Test
+    public void testEatMeHorizontalDownBreak() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼ ☺ ═══════►  ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "UP");
+    }
+
+    @Test
+    public void testEatMeVerticalMiddle() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼        ☺    ☼" +
+                "☼        ║    ☼" +
+                "☼        ║    ☼" +
+                "☼        ║    ☼" +
+                "☼        ║    ☼" +
+                "☼        ▼    ☼" +
+                "☼             ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
+    }
+
+    @Test
+    public void testEatMeVerticalRightBreak() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼            ☺☼" +
+                "☼            ║☼" +
+                "☼            ║☼" +
+                "☼            ║☼" +
+                "☼            ║☼" +
+                "☼            ▼☼" +
+                "☼             ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "LEFT");
+    }
+
+    @Test
+    public void testEatMeVerticalLeftBreak() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼☺            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼▼            ☼" +
+                "☼             ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
+    }
+
+
+    @Test
     public void testNotSameDirection() {
         assertB("☼☼☼☼☼☼" +
                 "☼    ☼" +
@@ -53,7 +168,7 @@ public class YourSolverTest {
         assertB("☼☼☼☼☼☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼◄ ☺ ☼" +
+                "☼▼ ☺ ☼" +
                 "☼    ☼" +
                 "☼☼☼☼☼☼", "RIGHT");
 
@@ -66,7 +181,7 @@ public class YourSolverTest {
 
         assertB("☼☼☼☼☼☼" +
                 "☼    ☼" +
-                "☼☺  ►☼" +
+                "☼☺  ▲☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼☼☼☼☼☼", "LEFT");
