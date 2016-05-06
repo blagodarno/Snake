@@ -155,6 +155,82 @@ public class YourSolverTest {
                 "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
     }
 
+    @Test
+    public void testVerticalBeforeBreakDown() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼    ☺        ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼▼            ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
+    }
+
+    @Test
+    public void testVerticalBeforeBreakUp() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼▲             ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼║            ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼           ☺ ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "RIGHT");
+    }
+
+    @Test
+    public void testHorizontalBeforeBreakRight() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼ ☺           ☼" +
+                "☼   ═════════►☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "UP");
+    }
+
+
+    @Test
+    public void testHorizontalBeforeBreakLeft() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼◄═════════   ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼     ☺       ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
+    }
 
     @Test
     public void testNotSameDirection() {

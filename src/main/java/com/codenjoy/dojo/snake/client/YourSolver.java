@@ -73,6 +73,30 @@ public class YourSolver implements Solver<Board> {
             }
         }
 
+
+
+        // don't eat break ( snake in vertical position )
+        if (((field[snakeHeadX][snakeHeadY+1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▼')) ||
+                ((field[snakeHeadX][snakeHeadY-1]=='☼')&& (field[snakeHeadX][snakeHeadY]=='▲')) ) {
+            if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
+                return Direction.RIGHT.toString();
+            } else {
+                return Direction.LEFT.toString();
+            }
+        }
+        // don't eat break ( snake in horizontal position )
+        if (((field[snakeHeadX+1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='►')) ||
+                (field[snakeHeadX-1][snakeHeadY]=='☼')&& (field[snakeHeadX][snakeHeadY]=='◄') ) {
+            if (field[snakeHeadX][snakeHeadY+1] == ' ') {
+                return Direction.DOWN.toString();
+            } else {
+                return Direction.UP.toString();
+            }
+        }
+
+
+
+        // don't eat self ( snake in vertical position )
         if (snakeHeadX == appleX && (((snakeHeadY > appleY) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
                 ((snakeHeadY < appleY)&& (field[snakeHeadX][snakeHeadY]=='▲')) )) {
             if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
@@ -81,7 +105,7 @@ public class YourSolver implements Solver<Board> {
                 return Direction.LEFT.toString();
             }
         }
-
+        // don't eat self ( snake in horizontal position )
         if (snakeHeadY == appleY && (((snakeHeadX > appleX) && (field[snakeHeadX][snakeHeadY]=='►')) ||
                 (snakeHeadX < appleX)&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
             if (field[snakeHeadX][snakeHeadY+1] == ' ') {
