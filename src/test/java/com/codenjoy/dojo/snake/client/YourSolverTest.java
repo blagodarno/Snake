@@ -232,6 +232,46 @@ public class YourSolverTest {
                 "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
     }
 
+
+    @Test
+    public void testNotEatSelfBodyHorizontal() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼   ╔═══════╗ ☼" +
+                "☼   ║◄══════╝ ☼" +
+                "☼   ╙         ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼     ☺       ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
+    }
+
+    public void testNotEatSelfBodyVertical() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼       ╔══╗  ☼" +
+                "☼       ║  ║  ☼" +
+                "☼       ▼  ║   ☼" +
+                "☼  ════════╝  ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼             ☼" +
+                "☼     ☺       ☼" +
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "LEFT");
+    }
+
+
+
     @Test
     public void testNotSameDirection() {
         assertB("☼☼☼☼☼☼" +

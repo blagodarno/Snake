@@ -73,12 +73,13 @@ public class YourSolver implements Solver<Board> {
             }
         }
 
-
+        int dx = snakeHeadX - appleX;
+        int dy = snakeHeadY - appleY;
 
         // don't eat break ( snake in vertical position )
         if (((field[snakeHeadX][snakeHeadY+1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▼')) ||
                 ((field[snakeHeadX][snakeHeadY-1]=='☼')&& (field[snakeHeadX][snakeHeadY]=='▲')) ) {
-            if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
+            if (dx<0) {
                 return Direction.RIGHT.toString();
             } else {
                 return Direction.LEFT.toString();
@@ -87,7 +88,47 @@ public class YourSolver implements Solver<Board> {
         // don't eat break ( snake in horizontal position )
         if (((field[snakeHeadX+1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='►')) ||
                 (field[snakeHeadX-1][snakeHeadY]=='☼')&& (field[snakeHeadX][snakeHeadY]=='◄') ) {
-            if (field[snakeHeadX][snakeHeadY+1] == ' ') {
+            if (dy<0) {
+                return Direction.DOWN.toString();
+            } else {
+                return Direction.UP.toString();
+            }
+        }
+
+
+        // don't eat snake-body in circle-move( snake in vertical position )
+        if ((((field[snakeHeadX][snakeHeadY+1]=='═') || (field[snakeHeadX][snakeHeadY+1]=='╘') ||
+                (field[snakeHeadX][snakeHeadY+1]=='╕') ) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
+                (((field[snakeHeadX][snakeHeadY-1]=='═') || (field[snakeHeadX][snakeHeadY+1]=='╘') ||
+                        (field[snakeHeadX][snakeHeadY+1]=='╕') ) && (field[snakeHeadX][snakeHeadY]=='▲')) ) {
+            int bodyX = 0;
+            for (int x = 0; x < field.length; x++) {
+                char ch = field[x][snakeHeadY];
+                if (ch == Elements.TAIL_VERTICAL.ch()) {
+                    bodyX = x;
+                    break;
+                }
+            }
+            if (bodyX < snakeHeadX) {
+                return Direction.RIGHT.toString();
+            } else {
+                return Direction.LEFT.toString();
+            }
+        }
+        // don't eat snake-body in circle-move( snake in horizontal position )
+        if ((((field[snakeHeadX+1][snakeHeadY]=='║') || (field[snakeHeadX+1][snakeHeadY]=='╙') ||
+                (field[snakeHeadX+1][snakeHeadY]=='╓')) && (field[snakeHeadX][snakeHeadY]=='►')) ||
+                (((field[snakeHeadX-1][snakeHeadY]=='║') || (field[snakeHeadX+1][snakeHeadY]=='╙') ||
+                        (field[snakeHeadX+1][snakeHeadY]=='╓'))&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
+            int bodyY = 0;
+            for (int y = 0; y < field.length; y++) {
+                char ch = field[snakeHeadX][y];
+                if (ch == Elements.TAIL_HORIZONTAL.ch()) {
+                    bodyY = y;
+                    break;
+                }
+            }
+            if (bodyY < snakeHeadY) {
                 return Direction.DOWN.toString();
             } else {
                 return Direction.UP.toString();
@@ -96,7 +137,7 @@ public class YourSolver implements Solver<Board> {
 
 
 
-        // don't eat self ( snake in vertical position )
+        // don't eat self when apple direct behind ( snake in vertical position )
         if (snakeHeadX == appleX && (((snakeHeadY > appleY) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
                 ((snakeHeadY < appleY)&& (field[snakeHeadX][snakeHeadY]=='▲')) )) {
             if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
@@ -105,7 +146,7 @@ public class YourSolver implements Solver<Board> {
                 return Direction.LEFT.toString();
             }
         }
-        // don't eat self ( snake in horizontal position )
+        // don't eat self when apple direct behind ( snake in horizontal position )
         if (snakeHeadY == appleY && (((snakeHeadX > appleX) && (field[snakeHeadX][snakeHeadY]=='►')) ||
                 (snakeHeadX < appleX)&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
             if (field[snakeHeadX][snakeHeadY+1] == ' ') {
@@ -115,8 +156,7 @@ public class YourSolver implements Solver<Board> {
             }
         }
 
-        int dx = snakeHeadX - appleX;
-        int dy = snakeHeadY - appleY;
+
 
         if (dx < 0) {
             return Direction.RIGHT.toString();
