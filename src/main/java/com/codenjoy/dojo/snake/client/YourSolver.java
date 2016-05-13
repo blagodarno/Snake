@@ -33,7 +33,7 @@ public class YourSolver implements Solver<Board> {
 
         char[][] field = board.getField();
 
-        // found hrad of snake
+        // found had of snake
         int snakeHeadX = -1;
         int snakeHeadY = -1;
         for (int x = 0; x < field.length; x++) {
@@ -78,8 +78,8 @@ public class YourSolver implements Solver<Board> {
 
         // don't eat break ( snake in vertical position )
         if (((field[snakeHeadX][snakeHeadY+1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▼')) ||
-                ((field[snakeHeadX][snakeHeadY-1]=='☼')&& (field[snakeHeadX][snakeHeadY]=='▲')) ) {
-            if (dx<0) {
+                ((field[snakeHeadX][snakeHeadY-1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▲'))) {
+            if (dx<0 && field[snakeHeadX+1][snakeHeadY]==' ') {
                 return Direction.RIGHT.toString();
             } else {
                 return Direction.LEFT.toString();
@@ -87,8 +87,8 @@ public class YourSolver implements Solver<Board> {
         }
         // don't eat break ( snake in horizontal position )
         if (((field[snakeHeadX+1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='►')) ||
-                (field[snakeHeadX-1][snakeHeadY]=='☼')&& (field[snakeHeadX][snakeHeadY]=='◄') ) {
-            if (dy<0) {
+                ((field[snakeHeadX-1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='◄'))) {
+            if (dy<0 && field[snakeHeadX][snakeHeadY+1]==' ') {
                 return Direction.DOWN.toString();
             } else {
                 return Direction.UP.toString();
@@ -97,38 +97,101 @@ public class YourSolver implements Solver<Board> {
 
 
         // don't eat snake-body in circle-move( snake in vertical position )
+/*
         if ((((field[snakeHeadX][snakeHeadY+1]=='═') || (field[snakeHeadX][snakeHeadY+1]=='╘') ||
-                (field[snakeHeadX][snakeHeadY+1]=='╕') ) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
+                (field[snakeHeadX][snakeHeadY+1]=='╕') || (field[snakeHeadX][snakeHeadY+1]=='╗') ||
+                (field[snakeHeadX][snakeHeadY+1]=='╝') || (field[snakeHeadX][snakeHeadY+1]=='╔')||
+                (field[snakeHeadX][snakeHeadY+1]=='╚')) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
                 (((field[snakeHeadX][snakeHeadY-1]=='═') || (field[snakeHeadX][snakeHeadY+1]=='╘') ||
-                        (field[snakeHeadX][snakeHeadY+1]=='╕') ) && (field[snakeHeadX][snakeHeadY]=='▲')) ) {
-            int bodyX = 0;
-            for (int x = 0; x < field.length; x++) {
+                        (field[snakeHeadX][snakeHeadY+1]=='╕') || (field[snakeHeadX][snakeHeadY+1]=='╗') ||
+                        (field[snakeHeadX][snakeHeadY+1]=='╝') || (field[snakeHeadX][snakeHeadY+1]=='╔') ||
+                        (field[snakeHeadX][snakeHeadY+1]=='╚') ) && (field[snakeHeadX][snakeHeadY]=='▲')) ) {
+*/
+        if ((((field[snakeHeadX][snakeHeadY+1]=='═') || (field[snakeHeadX][snakeHeadY+1]=='╘') ||
+                (field[snakeHeadX][snakeHeadY+1]=='╕') ||
+                (field[snakeHeadX][snakeHeadY+1]=='☻')) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
+                (((field[snakeHeadX][snakeHeadY-1]=='═') || (field[snakeHeadX][snakeHeadY-1]=='╘') ||
+                        (field[snakeHeadX][snakeHeadY-1]=='╕') || (field[snakeHeadX][snakeHeadY-1]=='☻'))&&
+                            (field[snakeHeadX][snakeHeadY]=='▲')) ) {
+
+
+            int bodyXleft = 0;
+            int bodyXrigt = field.length;
+            for (int x = snakeHeadX; x < field.length; x++) {
                 char ch = field[x][snakeHeadY];
-                if (ch == Elements.TAIL_VERTICAL.ch()) {
-                    bodyX = x;
+                if (ch == Elements.TAIL_VERTICAL.ch() || ch == Elements.TAIL_HORIZONTAL.ch() ||
+                        ch == Elements.TAIL_END_DOWN.ch() || ch == Elements.TAIL_END_LEFT.ch() ||
+                        ch == Elements.TAIL_END_RIGHT.ch() || ch == Elements.TAIL_END_UP.ch() ||
+                        ch == Elements.TAIL_LEFT_DOWN.ch() || ch == Elements.TAIL_LEFT_UP.ch() ||
+                        ch == Elements.TAIL_RIGHT_DOWN.ch() || ch == Elements.TAIL_RIGHT_UP.ch() ||
+                        ch == '☻') {
+                    bodyXrigt = x;
                     break;
                 }
             }
-            if (bodyX < snakeHeadX) {
+            for (int x = snakeHeadX; x >=0; x--) {
+                char ch = field[x][snakeHeadY];
+                if (ch == Elements.TAIL_VERTICAL.ch() | ch == Elements.TAIL_HORIZONTAL.ch() ||
+                        ch == Elements.TAIL_END_DOWN.ch() || ch == Elements.TAIL_END_LEFT.ch() ||
+                        ch == Elements.TAIL_END_RIGHT.ch() || ch == Elements.TAIL_END_UP.ch() ||
+                        ch == Elements.TAIL_LEFT_DOWN.ch() || ch == Elements.TAIL_LEFT_UP.ch() ||
+                        ch == Elements.TAIL_RIGHT_DOWN.ch() || ch == Elements.TAIL_RIGHT_UP.ch() ||
+                        ch == '☻' ) {
+                    bodyXleft = x;
+                    break;
+                }
+            }
+            if ((bodyXrigt-snakeHeadX)>=(snakeHeadX-bodyXleft)) {
                 return Direction.RIGHT.toString();
             } else {
                 return Direction.LEFT.toString();
             }
         }
         // don't eat snake-body in circle-move( snake in horizontal position )
+/*
         if ((((field[snakeHeadX+1][snakeHeadY]=='║') || (field[snakeHeadX+1][snakeHeadY]=='╙') ||
-                (field[snakeHeadX+1][snakeHeadY]=='╓')) && (field[snakeHeadX][snakeHeadY]=='►')) ||
+                (field[snakeHeadX+1][snakeHeadY]=='╓') || (field[snakeHeadX+1][snakeHeadY]=='╗') ||
+                (field[snakeHeadX+1][snakeHeadY]=='╝') || (field[snakeHeadX+1][snakeHeadY]=='╔')) ||
+                (field[snakeHeadX+1][snakeHeadY]=='╚') && (field[snakeHeadX][snakeHeadY]=='►')) ||
                 (((field[snakeHeadX-1][snakeHeadY]=='║') || (field[snakeHeadX+1][snakeHeadY]=='╙') ||
-                        (field[snakeHeadX+1][snakeHeadY]=='╓'))&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
-            int bodyY = 0;
-            for (int y = 0; y < field.length; y++) {
+                        (field[snakeHeadX+1][snakeHeadY]=='╓') || (field[snakeHeadX+1][snakeHeadY]=='╗') ||
+                        (field[snakeHeadX+1][snakeHeadY]=='╝') || (field[snakeHeadX+1][snakeHeadY]=='╔') ||
+                        (field[snakeHeadX+1][snakeHeadY]=='╚'))&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
+*/
+
+        if ((((field[snakeHeadX+1][snakeHeadY]=='║') || (field[snakeHeadX+1][snakeHeadY]=='╙') ||
+                (field[snakeHeadX+1][snakeHeadY]=='╓') ||
+                (field[snakeHeadX+1][snakeHeadY]=='☻') ) && (field[snakeHeadX][snakeHeadY]=='►')) ||
+                (((field[snakeHeadX-1][snakeHeadY]=='║') || (field[snakeHeadX-1][snakeHeadY]=='╙') ||
+                        (field[snakeHeadX-1][snakeHeadY]=='╓') ||
+                        (field[snakeHeadX-1][snakeHeadY]=='☻') )&& (field[snakeHeadX][snakeHeadY]=='◄') )) {
+            int bodyYup = 0;
+            int bodyYdown = field.length;
+            for (int y = snakeHeadY; y < field.length; y++) {
                 char ch = field[snakeHeadX][y];
-                if (ch == Elements.TAIL_HORIZONTAL.ch()) {
-                    bodyY = y;
+                if (ch == Elements.TAIL_VERTICAL.ch() | ch == Elements.TAIL_HORIZONTAL.ch() ||
+                        ch == Elements.TAIL_END_DOWN.ch() || ch == Elements.TAIL_END_LEFT.ch() ||
+                        ch == Elements.TAIL_END_RIGHT.ch() || ch == Elements.TAIL_END_UP.ch() ||
+                        ch == Elements.TAIL_LEFT_DOWN.ch() || ch == Elements.TAIL_LEFT_UP.ch() ||
+                        ch == Elements.TAIL_RIGHT_DOWN.ch() || ch == Elements.TAIL_RIGHT_UP.ch() ||
+                        ch == '☻' )  {
+                    bodyYdown = y;
                     break;
                 }
             }
-            if (bodyY < snakeHeadY) {
+            for (int y = snakeHeadY; y >= 0; y--) {
+                char ch = field[snakeHeadX][y];
+                if (ch == Elements.TAIL_VERTICAL.ch() | ch == Elements.TAIL_HORIZONTAL.ch() ||
+                        ch == Elements.TAIL_END_DOWN.ch() || ch == Elements.TAIL_END_LEFT.ch() ||
+                        ch == Elements.TAIL_END_RIGHT.ch() || ch == Elements.TAIL_END_UP.ch() ||
+                        ch == Elements.TAIL_LEFT_DOWN.ch() || ch == Elements.TAIL_LEFT_UP.ch() ||
+                        ch == Elements.TAIL_RIGHT_DOWN.ch() || ch == Elements.TAIL_RIGHT_UP.ch() ||
+                        ch == '☻' )  {
+                    bodyYup = y;
+                    break;
+                }
+            }
+            if ((bodyYdown-snakeHeadY)>=(snakeHeadY-bodyYup)){
                 return Direction.DOWN.toString();
             } else {
                 return Direction.UP.toString();
@@ -139,7 +202,7 @@ public class YourSolver implements Solver<Board> {
 
         // don't eat self when apple direct behind ( snake in vertical position )
         if (snakeHeadX == appleX && (((snakeHeadY > appleY) && (field[snakeHeadX][snakeHeadY]=='▼')) ||
-                ((snakeHeadY < appleY)&& (field[snakeHeadX][snakeHeadY]=='▲')) )) {
+                ((snakeHeadY < appleY) && (field[snakeHeadX][snakeHeadY]=='▲')) )) {
             if (field[snakeHeadX + 1][snakeHeadY] == ' ') {
                 return Direction.RIGHT.toString();
             } else {
@@ -158,22 +221,103 @@ public class YourSolver implements Solver<Board> {
 
 
 
-        if (dx < 0) {
+        if (dx < 0 && (field[snakeHeadX][snakeHeadY]!='◄') && (field[snakeHeadX+1][snakeHeadY]!='║' ) &&
+                (field[snakeHeadX+1][snakeHeadY]!='╙') && (field[snakeHeadX+1][snakeHeadY]!='╓') &&
+                (field[snakeHeadX+1][snakeHeadY]!='╗') && (field[snakeHeadX+1][snakeHeadY]!='╝') &&
+                (field[snakeHeadX+1][snakeHeadY]!='╔') && (field[snakeHeadX+1][snakeHeadY]!='╚') &&
+                (field[snakeHeadX+1][snakeHeadY]!='☻')) {
             return Direction.RIGHT.toString();
-        }
-        if (dx > 0) {
-            return Direction.LEFT.toString();
-        }
-        if (dy < 0) {
+        }else if (field[snakeHeadX][snakeHeadY+1] == ' ' && dy<0) {
+                return Direction.DOWN.toString();
+        }else if (field[snakeHeadX][snakeHeadY-1] == ' ' && dy>0){
+               return Direction.UP.toString();
+        }else if ( field[snakeHeadX][snakeHeadY-1] == '║'&& dy>0) {
             return Direction.DOWN.toString();
-        }
-        if (dy > 0) {
+        }else if (field[snakeHeadX][snakeHeadY+1] == '║'&& dy<0) {
             return Direction.UP.toString();
         }
+//        else if (field[snakeHeadX][snakeHeadY+1] == ' '&& dy<0) {
+//            return Direction.DOWN.toString();
+//        }else if (field[snakeHeadX][snakeHeadY-1] == ' '&& dy>0) {
+//            return Direction.UP.toString();
+//        }
 
+        if (dx > 0 && (field[snakeHeadX][snakeHeadY]!='►') && (field[snakeHeadX-1][snakeHeadY]!='║' ) &&
+                (field[snakeHeadX-1][snakeHeadY]!='╙') && (field[snakeHeadX-1][snakeHeadY]!='╓')&&
+                (field[snakeHeadX-1][snakeHeadY]!='╗') && (field[snakeHeadX-1][snakeHeadY]!='╝')&&
+                (field[snakeHeadX-1][snakeHeadY]!='╔') && (field[snakeHeadX-1][snakeHeadY]!='╚')&&
+                (field[snakeHeadX-1][snakeHeadY]!='☻')) {
+            return Direction.LEFT.toString();
+        }else if (field[snakeHeadX][snakeHeadY+1] == ' ' && dy<0) {
+            return Direction.DOWN.toString();
+        }else if (field[snakeHeadX][snakeHeadY-1] == ' ' && dy>0){
+            return Direction.UP.toString();
+        }else if ( field[snakeHeadX][snakeHeadY-1] == '║'&& dy>0) {
+            return Direction.DOWN.toString();
+        }else if (field[snakeHeadX][snakeHeadY+1] == '║'&& dy<0) {
+            return Direction.UP.toString();
+        }
+//       else if (field[snakeHeadX][snakeHeadY+1] == ' '&& dy>0) {
+//         return Direction.DOWN.toString();
+//        }else if (field[snakeHeadX][snakeHeadY-1] == ' '&& dy<0) {
+//            return Direction.UP.toString();
+//       }
 
+        if (dy < 0  && (field[snakeHeadX][snakeHeadY]!='▲') && (field[snakeHeadX][snakeHeadY+1]!='═' ) &&
+                (field[snakeHeadX][snakeHeadY+1]!='╘') && (field[snakeHeadX][snakeHeadY+1]!='╕')&&
+                (field[snakeHeadX][snakeHeadY+1]!='╗') && (field[snakeHeadX][snakeHeadY+1]!='╝')&&
+                (field[snakeHeadX][snakeHeadY+1]!='╔') && (field[snakeHeadX][snakeHeadY+1]!='╔')&&
+                (field[snakeHeadX][snakeHeadY+1]!='☻')) {
+            return Direction.DOWN.toString();
+        }else if (field[snakeHeadX + 1][snakeHeadY] == ' ' && dx<0) {
+                return Direction.RIGHT.toString();
+        }else if (field[snakeHeadX - 1][snakeHeadY] == ' ' && dx>0) {
+                return Direction.LEFT.toString();
+        }else if ( field[snakeHeadX - 1][snakeHeadY] == '═'&& dx>0) {
+            return Direction.RIGHT.toString();
+        }else if (field[snakeHeadX + 1][snakeHeadY] == '═'&& dx<0) {
+            return Direction.LEFT.toString();
+        }
+//        else if (field[snakeHeadX + 1][snakeHeadY] == ' '&& dx>0) {
+//           return Direction.RIGHT.toString();
+//       }else if (field[snakeHeadX - 1][snakeHeadY] == ' '&& dx<0) {
+//            return Direction.LEFT.toString();
+//       }
 
-        return Direction.UP.toString();
+        if (dy > 0 && (field[snakeHeadX][snakeHeadY]!='▼') && (field[snakeHeadX][snakeHeadY-1]!='═' ) &&
+                (field[snakeHeadX][snakeHeadY-1]!='╘') && (field[snakeHeadX][snakeHeadY-1]!='╕') &&
+                (field[snakeHeadX][snakeHeadY-1]!='╗') && (field[snakeHeadX][snakeHeadY-1]!='╝') &&
+                (field[snakeHeadX][snakeHeadY-1]!='╔') && (field[snakeHeadX][snakeHeadY-1]!='╚') &&
+                (field[snakeHeadX][snakeHeadY-1]!='☻'))  {
+            return Direction.UP.toString();
+          }else if (field[snakeHeadX + 1][snakeHeadY] == ' '&& dx<=0) {
+          return Direction.RIGHT.toString();
+          }else if (field[snakeHeadX - 1][snakeHeadY] == ' '  && dx>=0){
+           return Direction.LEFT.toString();
+          }else if ( field[snakeHeadX - 1][snakeHeadY] == '═' && dx>=0) {
+            return Direction.RIGHT.toString();
+          }else if (field[snakeHeadX + 1][snakeHeadY] == '═'&& dx<=0) {
+            return Direction.LEFT.toString();
+          }
+//        else if (field[snakeHeadX + 1][snakeHeadY] == ' '&& dx>=0) {
+//            return Direction.RIGHT.toString();
+//          }else if (field[snakeHeadX - 1][snakeHeadY] == ' '&& dx<=0) {
+//            return Direction.LEFT.toString();
+//       }
+
+        char ch = field[snakeHeadX][snakeHeadY];
+        if (ch=='►'){
+                return Direction.RIGHT.toString();
+        }else if (ch=='◄') {
+            return Direction.LEFT.toString();
+        }else if (ch=='▼') {
+            return Direction.DOWN.toString();
+        } else if (ch=='▲'){
+                return Direction.UP.toString();
+        }
+
+        return Direction.STOP.toString();
+        //return null;
     }
 
     public static void main(String[] args) {
