@@ -62,51 +62,6 @@ public class YourSolverD implements Solver<Board> {
         String edgeYr_name ;
         int nextHopX;
         int nextHopY;
-/*
-
-        // found had of snake
-        for (int x = 1; x < field.length-1; x++) {
-            for (int y = 1; y < field.length-1; y++) {
-                char ch = field[x][y];
-                if (ch == Elements.HEAD_DOWN.ch() ||
-                        ch == Elements.HEAD_UP.ch() ||
-                        ch == Elements.HEAD_LEFT.ch() ||
-                        ch == Elements.HEAD_RIGHT.ch())
-                {
-                    snakeHeadX = x;
-                    snakeHeadY = y;
-                    snakeHeadPoint = (x + 10) * 100 + y + 10;
-                    break;
-
-                }
-            }
-            if (snakeHeadX != -1) {
-                break;
-            }
-        }
-
-        // found apple
-        for (int x = 1; x < field.length-1; x++) {
-            for (int y = 1; y < field.length-1; y++) {
-                char ch = field[x][y];
-                if (ch == Elements.GOOD_APPLE.ch()) {
-                    appleX = x;
-                    appleY = y;
-                    applePoint = (x + 10) * 100 + y + 10;
-                    break;
-
-                }
-            }
-            if (appleX != -1) {
-                break;
-            }
-        }
-*/
-
-//        System.out.println("1:1= |"+field[1][1]+"|");
-//        System.out.println("field.length-1:field.length-1= |"+field[field.length-1][field.length-1]+"|");
-//        System.out.println("field.length-1:field.length-2= |"+field[field.length-2][field.length-2]+"|");
-//        System.out.println("field.length= "+field.length);
 
         for (int y = 1; y < field.length-1; y++) {
             for (int x = 1; x < field.length-1; x++) {
@@ -170,26 +125,6 @@ public class YourSolverD implements Solver<Board> {
 
         int dxA = snakeHeadX - appleX;
         int dyA = snakeHeadY - appleY;
-//
-//        // don't eat break ( snake in vertical position )
-//        if (((field[snakeHeadX][snakeHeadY+1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▼')) ||
-//                ((field[snakeHeadX][snakeHeadY-1]=='☼') && (field[snakeHeadX][snakeHeadY]=='▲'))) {
-//            if (dxA<0 && field[snakeHeadX+1][snakeHeadY]==' ') {
-//                return Direction.RIGHT.toString();
-//            } else {
-//                return Direction.LEFT.toString();
-//            }
-//        }
-//        // don't eat break ( snake in horizontal position )
-//        if (((field[snakeHeadX+1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='►')) ||
-//                ((field[snakeHeadX-1][snakeHeadY]=='☼') && (field[snakeHeadX][snakeHeadY]=='◄'))) {
-//            if (dyA<0 && field[snakeHeadX][snakeHeadY+1]==' ') {
-//                return Direction.DOWN.toString();
-//            } else {
-//                return Direction.UP.toString();
-//            }
-//        }
-
 
         // Lets check from location Loc_1 to Loc_10
         Graph graph = new Graph(nodes, edges);
@@ -200,8 +135,6 @@ public class YourSolverD implements Solver<Board> {
         System.out.println(" Path is: "+path);
 
         if(path.isEmpty()){
-//            Graph graph1 = new Graph(nodes, edges);
-//            DijkstraAlgorithm dijkstra1 = new DijkstraAlgorithm(graph1);
             dijkstra.execute(nodes.get(snakeHeadPoint));
             LinkedList<Vertex> pathToTail = dijkstra.getPath(nodes.get(snakeTailPoint));
 
