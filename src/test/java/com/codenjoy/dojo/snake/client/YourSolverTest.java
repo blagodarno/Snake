@@ -366,6 +366,42 @@ public class YourSolverTest {
                 "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "LEFT");
     }
 
+    @Test
+    public void testVerifeAccesstoTailNextStep() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼           ☻ ☼"+
+                "☼◄═══════╗    ☼"+
+                "☼        ║ ☺  ☼"+
+                "☼        ╚═══╗☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼            ║☼"+
+                "☼  ╘═════╗   ║☼"+
+                "☼        ╚═══╝☼"+
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "DOWN");
+    }
+    @Test
+    public void testVerifeAccesstoTailNextStep2() {
+        assertB("☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+                "☼ ☺      ▲    ☼"+
+                "☼        ╚╗   ☼"+
+                "☼       ╓ ║   ☼"+
+                "☼       ║ ║   ☼"+
+                "☼       ║☻║   ☼"+
+                "☼       ╚═╝   ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼             ☼"+
+                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼", "LEFT");
+    }
 
     @Test
     public void testNotSameDirection() {
@@ -401,7 +437,7 @@ public class YourSolverTest {
 
     private void assertB(String boardString, String expected) {
         // given
-        YourSolver solver = new YourSolver(new RandomDice());
+        YourSolverD solver = new YourSolverD(new RandomDice());
 
         // when
         String direction = solver.get((Board)new Board().forString(

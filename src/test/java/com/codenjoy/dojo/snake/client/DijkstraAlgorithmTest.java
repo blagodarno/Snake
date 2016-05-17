@@ -74,16 +74,27 @@ public class DijkstraAlgorithmTest {
         addLane("Edge_9", 14, 19, 502);
         addLane("Edge_10", 19, 110, 40);
         addLane("Edge_11", 11, 110, 600);
-        //addLane("Edge_12", 12, 10, 217);
+      //  addLane("Edge_12", 12, 10, 217);
         //addLane("Edge_13", 16, 12, 186);
+        //System.out.println(edges.get(0));
+        Edge ed_ed = new Edge("Edge_1", nodes.get(10), nodes.get(12), 217);
+        System.out.println(ed_ed);
+        System.out.println(ed_ed.getId() + ed_ed.getSource()+ed_ed.getDestination()+ed_ed.getWeight());
 
-
-
+        System.out.println(edges.get(1));
+        System.out.println(edges.get(1).getId() + edges.get(1).getSource()+edges.get(1).getDestination()+edges.get(1).getWeight());
+       // edges.remove(ed_ed);
+        Edge ed = edges.get(1);
+        System.out.println(ed.equals(ed_ed));
+        System.out.println(edges.contains(ed_ed));
+       System.out.println(edges.indexOf(ed_ed));
+        //edges.remove(4);
         // Lets check from location Loc_1 to Loc_10
+        // nodes.remove(15);
         Graph graph = new Graph(nodes, edges);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
-        dijkstra.execute(nodes.get(12));
-        LinkedList<Vertex> path = dijkstra.getPath(nodes.get(10));
+        dijkstra.execute(nodes.get(10));
+        LinkedList<Vertex> path = dijkstra.getPath(nodes.get(110));
 
         assertNotNull(path);
         assertTrue(path.size() > 0);
