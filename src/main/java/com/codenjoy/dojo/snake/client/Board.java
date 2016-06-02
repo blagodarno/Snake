@@ -2,6 +2,7 @@ package com.codenjoy.dojo.snake.client;
 
 import com.codenjoy.dojo.client.*;
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.snake.model.Elements;
 
 import java.util.*;
@@ -42,6 +43,29 @@ public class Board extends AbstractBoard<Elements> {
                 Elements.HEAD_LEFT,
                 Elements.HEAD_RIGHT);
         return result.get(0);
+    }
+
+    public int getHeadIndex() {
+        List<Point> result = get(
+                Elements.HEAD_UP,
+                Elements.HEAD_DOWN,
+                Elements.HEAD_LEFT,
+                Elements.HEAD_RIGHT);
+        return ((result.get(0).getX()+10)*100)+result.get(0).getY()+10;
+    }
+
+    public int getTailIndex() {
+        List<Point> result = get(
+                Elements.TAIL_END_DOWN,
+                Elements.TAIL_END_UP,
+                Elements.TAIL_END_LEFT,
+                Elements.TAIL_END_RIGHT);
+        return ((result.get(0).getX()+10)*100)+result.get(0).getY()+10;
+    }
+
+    public int getAppleIndex() {
+        List<Point> result = get(Elements.GOOD_APPLE);
+        return ((result.get(0).getX()+10)*100)+result.get(0).getY()+10;
     }
 
     public List<Point> getBarriers() {
@@ -89,5 +113,33 @@ public class Board extends AbstractBoard<Elements> {
 
     public List<Point> getWalls() {
         return get(Elements.BREAK);
+    }
+
+    public Point getTail() {
+        for (int y = 1; y < field.length - 1; y++) {
+            for (int x = 1; x < field.length - 1; x++) {
+                char ch = field[x][y];
+                if (ch == Elements.TAIL_END_DOWN.ch() ||
+                        ch == Elements.TAIL_END_UP.ch() ||
+                        ch == Elements.TAIL_END_RIGHT.ch() ||
+                        ch == Elements.TAIL_END_LEFT.ch()) {
+                    return new PointImpl(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Point nextHopTailPoint() {
+        Point tail = getTail();
+        if (isAt(tail.getX(), tail.getY(), Elements.TAIL_END_DOWN)) {
+            return new PointImpl(tail.getX(), tail.getY()-1);
+        } else if (isAt(tail.getX(), tail.getY(), Elements.TAIL_END_UP)) {
+            return new PointImpl(tail.getX(), tail.getY()+1);
+        } else if (isAt(tail.getX(), tail.getY(), Elements.TAIL_END_LEFT)) {
+            return new PointImpl(tail.getX()+1, tail.getY());
+        } else {
+            return new PointImpl(tail.getX()-1, tail.getY()-1);
+        }
     }
 }

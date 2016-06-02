@@ -30,6 +30,12 @@ public class YourSolver implements Solver<Board> {
 //        Point point = board.getApples().get(0);
 //        point.getX()
 //        point.getY()
+        Point head = board.getHead();
+        Point apple = board.getApples().get(0);
+        Point tail = board.getTail();
+        System.out.println(tail.toString());
+        System.out.println(tail);
+
 
         char[][] field = board.getField();
 
